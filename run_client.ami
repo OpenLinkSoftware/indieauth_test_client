@@ -1,0 +1,6 @@
+#!/bin/bash
+
+export INDIEAUTH_ROOT=$(pwd)
+cd cmd/indieauth-client
+go run . osdb.openlinksw.com 4433 client.crt client.key
+

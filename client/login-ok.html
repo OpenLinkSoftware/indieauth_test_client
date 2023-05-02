@@ -1,0 +1,40 @@
+<html>
+  <head>
+    <title>OPL IndieAuth</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <script>
+      function handleCancel() {
+        document.location.href = "/";
+      }
+
+      window.onload = (event) => {
+        document.getElementById("btnCancel").addEventListener("click", handleCancel);
+      };
+    </script>
+  </head>
+  <body class="bodyClass">
+    <main>
+      <div class="info">
+        <strong>Login successful</strong><br><br>
+        Me: <a href="{{.Profile.Me}}">{{.Profile.Me}}</a><br>
+        Access token: {{.AccessToken}}<br>
+        Token type: {{.TokenType}}<br>
+        Expires in: {{if .AccessToken}} {{.ExpiresIn}} {{end}} <br>
+        Refresh token: {{.RefreshToken}}<br><br>
+        <strong>Profile claims:</strong><br>
+        name: {{.Profile.Profile.Name}}<br>
+        url: <a href="{{.Profile.Profile.URL}}">{{.Profile.Profile.URL}}</a><br>
+        webid: <a href="{{.Profile.Profile.WebID}}">{{.Profile.Profile.WebID}}</a><br>
+        email: {{.Profile.Profile.Email}}<br>
+        photo:<br>
+        {{if .Profile.Profile.Photo}}
+        <img style="object-fit:contain; height: 50px;" src="{{.Profile.Profile.Photo}}"/>
+        {{end}}
+        <br>
+      </div>
+      <div style="margin-top: 10px">
+        <button id="btnCancel">Cancel</button>
+      </div>
+    </main>
+  </body>
+</html>

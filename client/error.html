@@ -1,0 +1,26 @@
+<html>
+  <head>
+    <title>OPL IndieAuth</title>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+    <script>
+      function handleCancel() {
+        document.location.href = "/";
+      }
+
+      window.onload = (event) => {
+        document.getElementById("btnCancel").addEventListener("click", handleCancel);
+      };
+    </script>
+  </head>
+  <body class="bodyClass">
+    <main>
+      <div class="info">
+        <strong>Error</strong><br><br>
+        {{.ErrorMsg}}
+      </div>
+      <div style="margin-top: 10px">
+        <button id="btnCancel">Cancel</button>
+      </div>
+    </main>
+  </body>
+</html>

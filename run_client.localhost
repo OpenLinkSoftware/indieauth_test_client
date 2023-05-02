@@ -1,0 +1,6 @@
+#!/bin/bash
+
+export INDIEAUTH_ROOT=$(pwd)
+cd cmd/indieauth-client
+go run . localhost 4444 client.crt client.key
+

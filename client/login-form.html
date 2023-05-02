@@ -1,0 +1,104 @@
+<html>
+
+<head>
+  <title>OPL IndieAuth</title>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/water.css@2/out/water.css">
+  <style>
+    .flex-container {
+      display: flex;
+      flex-direction: row;
+      justify-content: space-between;
+    }
+  </style>
+  <script>
+    let isLoggedIn = {{.IsLoggedIn }}
+
+    function handleSignOut() {
+      document.location.href = "/indieauth-logout";
+    }
+
+    window.onload = (event) => {
+      let divSignIn = document.getElementById("divSignIn");
+      let divSignOut = document.getElementById("divSignOut");
+
+      let btnSignOut = document.getElementById("btnSignOut");
+      btnSignOut.addEventListener("click", handleSignOut);
+
+      if (isLoggedIn) {
+        divSignIn.setAttribute('hidden', '');
+        divSignOut.removeAttribute('hidden', '');
+      } else {
+        divSignOut.setAttribute('hidden', '');
+        divSignIn.removeAttribute('hidden', '');
+      }
+    }
+  </script>
+</head>
+
+<body class="bodyClass">
+  <div class="flex-container">
+      <h2>IndieAuth Client</h2>
+      <img src="/static/opl_logo.png" style="height: 60%; width: auto;">
+  </div>
+  <div id="divSignIn" style="margin-top: 10px">
+    <div>
+      Enter your personal URL.
+
+      Your personal URL should be hosted on an IndieAuth server and point to a
+      web page containing the &lt;link&gt; elements required by Web Sign-in and IndieAuth.
+      <br><br>
+      e.g.
+      <pre>
+      &lt;link href="https://{virtuoso_host}/indieauth/indieauth_metadata" rel="indieauth-metadata"&gt;
+      &lt;link href="https://{virtuoso_host}/indieauth/indieauth_authorize" rel="authorization_endpoint"&gt;
+      &lt;link href="https://{virtoso_host}/indieauth/indieauth_token" rel="token_endpoint"&gt;
+    </pre>
+    </div>
+    <main>
+      <form class="login" action="/indieauth-login" method="post">
+        <label for="url">Personal URL:</label>
+        <!-- 
+        <input type="text" name="url" id="url" size="60" value="http://ods-qa.openlinksw.com/DAV/home/cblakeley/profile.vsp">
+        -->
+        <input type="text" name="url" id="url" size="60" value="http://localhost:8996/DAV/home/cblakeley/profile.vsp">
+
+        <fieldset>
+          <legend>Authorization response options</legend>
+          <div>
+            <input type="radio" id="rbAccessToken" name="authResponseOpt" value="access_token" checked>
+            <label for="rbAccessToken">Access token &amp; user profile information (from token endpoint)</label>
+          </div>
+          <div>
+            <input type="radio" id="rbUserProfile" name="authResponseOpt" value="user_profile">
+            <label for="rbUserProfile">User profile URL &amp; profile information (from authorization endpoint)</label>
+          </div>
+          <div>
+            <input type="radio" id="rbProfileUrlOnly" name="authResponseOpt" value="user_profile_url_only">
+            <label for="rbProfileUrlOnly">User profile URL only (from authorization endpoint)</label>
+          </div>
+        </fieldset>
+
+        <input type="hidden" name="csrf_token" value="{csrfToken}">
+        <div style="margin-top: 20px">
+          <input type="submit" value="Sign in">
+        </div>
+      </form>
+      <fieldset>
+        <legend>h-app microformat</legend>
+        <div class="h-app" style="display: flex; justify-content: center; align-items: center;">
+          <img src="/static/indieauth_logo.png" class="u-logo" style="height: 30px; max-height: auto; margin-right: 10px;">
+          <a href="/" class="u-url p-name">OpenLink IndieAuth Client</a>
+        </div>
+      </fieldset>
+  </div>
+
+  <div class="info" id="divSignOut" style="margin-top: 10px">
+    You are logged into IndieAuth Client as:<br><a href="{{.Me}}">{{.Me}}</a>
+    <div style="margin-top: 10px">
+      <button id="btnSignOut">Sign out</button>
+    </div>
+  </div>
+  </main>
+</body>
+
+</html>
